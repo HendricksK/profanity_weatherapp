@@ -4,30 +4,25 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 require_once(DIRNAME(__FILE__) . '../../vendor/autoload.php');
 
-require_once(DIRNAME(__FILE__) . '../../controller/class.openWeather.php');
+require_once(DIRNAME(__FILE__) . '../../controller/class.weatherController.php');
 
 $app = new \Slim\App;
 
 $app->get('/', function (Request $request, Response $response) {
     
-    $openWeather = new openWeatherController();
 
-    $openWeather->displayOpenWeatherAPIKey();
-
-    $response->getBody()->write($openWeather->getWeatherDataByCity('London'));
+    $response->getBody()->write('Give me your location');
 
     return $response;
 });
 
 $app->get('/weather/city/{location}', function (Request $request, Response $response) {
     
-    $openWeather = new openWeatherController();
-
-    $openWeather->displayOpenWeatherAPIKey();
+    $weatherController = new weatherController();
 
     $location = $request->getAttribute('location');
 
-    $response->getBody()->write($openWeather->getWeatherDataByCity($location));
+    $response->getBody()->write($weatherController->returnResponseByLocation($location));
 
     return $response;
 });
