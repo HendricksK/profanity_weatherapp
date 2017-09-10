@@ -3,15 +3,20 @@
 class openWeatherController {
 
 	private $openWeatherAPIKey = null;
+	private $curlObject = null;
 
 	function __construct() { 
 		$config = include_once(DIRNAME(__FILE__) . '../../configuration/apiConfig.php');
 		$this->openWeatherAPIKey = $config['openWeatherAPIKey'];
+		$this->curlObject = new Curl\Curl();
 	}
 
 	public function getWeatherDataByCity($cityName) {
 		//api.openweathermap.org/data/2.5/weather?q={city name}
-		$weatherData = file_get_contents('http://api.openweathermap.org/data/2.5/weather?q=' . $cityName . '&appid=' . $this->openWeatherAPIKey);
+		$response = $this->curlObject->get('http://api.openweathermap.org/data/2.5/weather?q=' . $cityName . '&appid=' . $this->openWeatherAPIKey);
+		$weatherData = $response->response;
+		$this->curlObject->close();
+		
 		return $this->getBasicWeatherForecast($weatherData);
 	}
 
