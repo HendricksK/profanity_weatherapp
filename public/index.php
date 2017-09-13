@@ -22,7 +22,13 @@ $app->get('/weather/city/{location}', function (Request $request, Response $resp
 
     $location = $request->getAttribute('location');
 
-    $response->getBody()->write($weatherController->returnResponseByLocation($location));
+    $response->getBody()->write(
+        $weatherController->returnResponseByLocation($location) 
+        .   '<br>' 
+        .   '<span>
+                <a href="https://darksky.net/poweredby/">Powered by Dark Aky</a>
+            </span>'
+    );
 
     return $response;
 });

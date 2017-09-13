@@ -1,18 +1,23 @@
 <?php 
 
-require_once(DIRNAME(__FILE__) . '../../controller/class.openWeather.php');
+require_once(DIRNAME(__FILE__) . '../../controller/class.openWeatherController.php');
+require_once(DIRNAME(__FILE__) . '../../controller/class.darkSkyController.php');
 
 class weatherController {
-	function __construct () {
 
+	protected $openWeather;
+	protected $darkSky;
+
+	function __construct () {
+		$this->openWeather = new openWeatherController();
+		$this->darkSky = new darkSkyController();
 	}
 
 	public function returnResponseByLocation($location) {
-		$openWeather = new openWeatherController();
 		// $response = $openWeather->getWeatherDataByCity($location);
-		
 		$weatherResponse = array (
-			'openWeatherResponse' => $openWeather->getWeatherDataByCity($location)
+			'openWeatherResponse' => $this->openWeather->getWeatherDataByCity($location),
+			'darkSkyResponse' => $this->darkSky->getWeatherDataByCity($location)
 		);
 
     	return $weatherResponse['openWeatherResponse'];
