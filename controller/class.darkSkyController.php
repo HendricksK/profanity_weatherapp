@@ -1,24 +1,22 @@
 <?php
 
+use \Curl\Curl;
+
 class darkSkyController {
 
 	private $darkSkyAPIKey = null;
 	private $curlObject = null;
 
 	function __construct() { 
-		$config = include_once(DIRNAME(__FILE__) . '../../configuration/apiConfig.php');
+		$config = include(DIRNAME(__FILE__) . '../../configuration/apiConfig.php');
 		$this->darkSkyAPIKey = $config['darkSkyAPIKey'];
-		$this->curlObject = new Curl\Curl();
+		$this->curlObject = new Curl();
 	}
 
 	public function getWeatherDataByCity($cityName) {
-		//https://api.darksky.net/forecast/ed844c0e55668d72dc1d7634a338c961/37.8267,-122.4233
-		var_dump($this->darkSkyAPIKey);
-		die;
-		$response = $this->curlObject->get('https://api.darksky.net/forecast/ed844c0e55668d72dc1d7634a338c961/37.8267,-122.4233');
-		var_dump($response->response);
-		die;	
-		$weatherData = $response;
+		
+		$response = $this->curlObject->get('https://api.darksky.net/forecast/' . $this->darkSkyAPIKey . '/37.8267,-122.4233');
+		$weatherData = $response->response;
 		$this->curlObject->close();
 		
 		return $weatherData;

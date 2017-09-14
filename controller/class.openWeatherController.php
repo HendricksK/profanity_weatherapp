@@ -1,14 +1,16 @@
 <?php
 
+use \Curl\Curl;
+
 class openWeatherController {
 
 	private $openWeatherAPIKey = null;
 	private $curlObject = null;
 
 	function __construct() { 
-		$config = include_once(DIRNAME(__FILE__) . '../../configuration/apiConfig.php');
+		$config = include(DIRNAME(__FILE__) . '../../configuration/apiConfig.php');
 		$this->openWeatherAPIKey = $config['openWeatherAPIKey'];
-		$this->curlObject = new Curl\Curl();
+		$this->curlObject = new Curl();
 	}
 
 	public function getWeatherDataByCity($cityName) {

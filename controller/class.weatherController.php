@@ -15,11 +15,12 @@ class weatherController {
 
 	public function returnResponseByLocation($location) {
 		// $response = $openWeather->getWeatherDataByCity($location);
+				
 		$weatherResponse = array (
 			'openWeatherResponse' => $this->openWeather->getWeatherDataByCity($location),
 			'darkSkyResponse' => $this->darkSky->getWeatherDataByCity($location)
 		);
 
-    	return $weatherResponse['openWeatherResponse'];
+    	return $weatherResponse;
 	}
 }

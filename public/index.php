@@ -2,9 +2,9 @@
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-require_once(DIRNAME(__FILE__) . '../../vendor/autoload.php');
+require(DIRNAME(__FILE__) . '../../vendor/autoload.php');
 
-require_once(DIRNAME(__FILE__) . '../../controller/class.weatherController.php');
+require(DIRNAME(__FILE__) . '../../controller/class.weatherController.php');
 
 $app = new \Slim\App;
 
@@ -21,12 +21,14 @@ $app->get('/weather/city/{location}', function (Request $request, Response $resp
     $weatherController = new weatherController();
 
     $location = $request->getAttribute('location');
-
+    $weatherReturn = $weatherController->returnResponseByLocation($location);
     $response->getBody()->write(
-        $weatherController->returnResponseByLocation($location) 
+        $weatherReturn['openWeatherResponse']
+        . '<br>' .
+        $weatherReturn['darkSkyResponse'] 
         .   '<br>' 
         .   '<span>
-                <a href="https://darksky.net/poweredby/">Powered by Dark Aky</a>
+                <a href="https://darksky.net/poweredby/">Powered by Dark Sky</a>
             </span>'
     );
 
