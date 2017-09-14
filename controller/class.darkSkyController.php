@@ -25,8 +25,8 @@ class darkSkyController {
 	* returns profanity string
 	*/
 	public function getWeatherDataByCity($cityName) {
-		
-		$response = $this->curlObject->get('https://api.darksky.net/forecast/' . $this->darkSkyAPIKey . '/37.8267,-122.4233');
+		$latLong = $this->locationController->getCoordinatesFromCityName($cityName);
+		$response = $this->curlObject->get('https://api.darksky.net/forecast/' . $this->darkSkyAPIKey . '/' . $latLong);
 		$weatherData = $response->response;
 		$this->curlObject->close();
 		

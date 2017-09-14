@@ -12,9 +12,12 @@ class locationController {
 	}
 
 	public function getCoordinatesFromCityName($cityname) {
+		$latLong = null;
 		// http://maps.googleapis.com/maps/api/geocode/json?address=Bangalore
-		$response = json_deconde(file_get_contents($this->baseUrl . $cityname));
-		$latLong = $response->results->geometry->location;
+		$response = json_decode(file_get_contents($this->baseUrl . $cityname));
+		$latLong .= $response->results[0]->geometry->location->lat . ',';
+		$latLong .= $response->results[0]->geometry->location->lng;
+		return $latLong;
 	}
 
 }
