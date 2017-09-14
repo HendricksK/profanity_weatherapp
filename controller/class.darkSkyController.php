@@ -13,6 +13,13 @@ class darkSkyController {
 		$this->curlObject = new Curl();
 	}
 
+	/*
+	* Argument $cityname
+	* calls api to get data
+	* calls function to return 
+	* profanity string
+	* returns profanity string
+	*/
 	public function getWeatherDataByCity($cityName) {
 		
 		$response = $this->curlObject->get('https://api.darksky.net/forecast/' . $this->darkSkyAPIKey . '/37.8267,-122.4233');
@@ -23,11 +30,19 @@ class darkSkyController {
 		// return $this->getBasicWeatherForecast($weatherData);
 	}
 
+	/*
+	* Argument $cityname
+	* returns APIKEY when needed
+	*/
 	public function displayOpenWeatherAPIKey() {
 		echo $this->darkSkyAPIKey;
 		return true;
 	}
 
+/*
+	* Argument $weatherData
+	* returns profanity string
+	*/
 	private function getBasicWeatherForecast($weatherData) {
 		$data = json_decode($weatherData);
 		
