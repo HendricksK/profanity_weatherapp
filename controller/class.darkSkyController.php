@@ -1,21 +1,32 @@
 <?php
 
+require_once(DIRNAME(__FILE__) . '/class.locationController.php');
+
 use \Curl\Curl;
 
 class darkSkyController {
 
-	private $darkSkyAPIKey = null;
-	private $curlObject = null;
+	private $darkSkyAPIKey 		= null;
+	private $curlObject 		= null;
+	private $locationController = null; 
 
 	function __construct() { 
-		$config = include(DIRNAME(__FILE__) . '../../configuration/apiConfig.php');
-		$this->darkSkyAPIKey = $config['darkSkyAPIKey'];
-		$this->curlObject = new Curl();
+		$config 					= include(DIRNAME(__FILE__) . '../../configuration/apiConfig.php');
+		$this->darkSkyAPIKey 		= $config['darkSkyAPIKey'];
+		$this->curlObject 			= new Curl();
+		$this->locationController 	= new locationController();
 	}
 
+	/*
+	* Argument $cityname
+	* calls api to get data
+	* calls function to return 
+	* profanity string
+	* returns profanity string
+	*/
 	public function getWeatherDataByCity($cityName) {
-		
-		$response = $this->curlObject->get('https://api.darksky.net/forecast/' . $this->darkSkyAPIKey . '/37.8267,-122.4233');
+		$latLong = $this->locationController->getCoordinatesFromCityName($cityName);
+		$response = $this->curlObject->get('https://api.darksky.net/forecast/' . $this->darkSkyAPIKey . '/' . $latLong);
 		$weatherData = $response->response;
 		$this->curlObject->close();
 		
@@ -23,11 +34,19 @@ class darkSkyController {
 		// return $this->getBasicWeatherForecast($weatherData);
 	}
 
-	public function displayOpenWeatherAPIKey() {
+	/*
+	* Argument $cityname
+	* returns APIKEY when needed
+	*/
+	private function displayOpenWeatherAPIKey() {
 		echo $this->darkSkyAPIKey;
 		return true;
 	}
 
+	/*
+	* Argument $weatherData
+	* returns profanity string
+	*/
 	private function getBasicWeatherForecast($weatherData) {
 		$data = json_decode($weatherData);
 		

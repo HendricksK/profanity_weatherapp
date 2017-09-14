@@ -4,15 +4,22 @@ use \Curl\Curl;
 
 class openWeatherController {
 
-	private $openWeatherAPIKey = null;
-	private $curlObject = null;
+	private $openWeatherAPIKey 	= null;
+	private $curlObject 		= null;
 
 	function __construct() { 
-		$config = include(DIRNAME(__FILE__) . '../../configuration/apiConfig.php');
-		$this->openWeatherAPIKey = $config['openWeatherAPIKey'];
-		$this->curlObject = new Curl();
+		$config 					= include(DIRNAME(__FILE__) . '../../configuration/apiConfig.php');
+		$this->openWeatherAPIKey 	= $config['openWeatherAPIKey'];
+		$this->curlObject 			= new Curl();
 	}
-
+	
+	/*
+	* Argument $cityname
+	* calls api to get data
+	* calls function to return 
+	* profanity string
+	* returns profanity string
+	*/
 	public function getWeatherDataByCity($cityName) {
 		//api.openweathermap.org/data/2.5/weather?q={city name}
 		$response = $this->curlObject->get('http://api.openweathermap.org/data/2.5/weather?q=' . $cityName . '&appid=' . $this->openWeatherAPIKey);
@@ -22,11 +29,19 @@ class openWeatherController {
 		return $this->getBasicWeatherForecast($weatherData);
 	}
 
-	public function displayOpenWeatherAPIKey() {
+	/*
+	* Argument $cityname
+	* returns APIKEY when needed
+	*/
+	private function displayOpenWeatherAPIKey() {
 		echo $this->openWeatherAPIKey;
 		return true;
 	}
 
+	/*
+	* Argument $weatherData
+	* returns profanity string
+	*/
 	private function getBasicWeatherForecast($weatherData) {
 		$data = json_decode($weatherData);
 		
