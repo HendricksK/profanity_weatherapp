@@ -4,13 +4,13 @@ use \Curl\Curl;
 
 class openWeatherController {
 
-	private $openWeatherAPIKey = null;
-	private $curlObject = null;
+	private $openWeatherAPIKey 	= null;
+	private $curlObject 		= null;
 
 	function __construct() { 
-		$config = include(DIRNAME(__FILE__) . '../../configuration/apiConfig.php');
-		$this->openWeatherAPIKey = $config['openWeatherAPIKey'];
-		$this->curlObject = new Curl();
+		$config 					= include(DIRNAME(__FILE__) . '../../configuration/apiConfig.php');
+		$this->openWeatherAPIKey 	= $config['openWeatherAPIKey'];
+		$this->curlObject 			= new Curl();
 	}
 	
 	/*

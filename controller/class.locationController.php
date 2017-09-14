@@ -5,7 +5,7 @@ use \Curl\Curl;
 class locationController {
 
 	private $curlObject = null;
-	private $baseUrl = 'http://maps.googleapis.com/maps/api/geocode/json?address=';
+	private $baseUrl 	= 'http://maps.googleapis.com/maps/api/geocode/json?address=';
 
 	function __construct() {
 		$this->curlObject = new Curl();

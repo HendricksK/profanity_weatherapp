@@ -9,10 +9,15 @@ class weatherController {
 	protected $darkSky;
 
 	function __construct () {
-		$this->openWeather = new openWeatherController();
-		$this->darkSky = new darkSkyController();
+		$this->openWeather 	= new openWeatherController();
+		$this->darkSky 		= new darkSkyController();
 	}
 
+	/*
+	* argument $location
+	* call controller, calls the seperate controllers
+	* wraps in an array, and returns data to index file
+	*/
 	public function returnResponseByLocation($location) {
 		// $response = $openWeather->getWeatherDataByCity($location);
 				

@@ -1,16 +1,20 @@
 <?php
 
+require_once(DIRNAME(__FILE__) . '/class.locationController.php');
+
 use \Curl\Curl;
 
 class darkSkyController {
 
-	private $darkSkyAPIKey = null;
-	private $curlObject = null;
+	private $darkSkyAPIKey 		= null;
+	private $curlObject 		= null;
+	private $locationController = null; 
 
 	function __construct() { 
-		$config = include(DIRNAME(__FILE__) . '../../configuration/apiConfig.php');
-		$this->darkSkyAPIKey = $config['darkSkyAPIKey'];
-		$this->curlObject = new Curl();
+		$config 					= include(DIRNAME(__FILE__) . '../../configuration/apiConfig.php');
+		$this->darkSkyAPIKey 		= $config['darkSkyAPIKey'];
+		$this->curlObject 			= new Curl();
+		$this->locationController 	= new locationController();
 	}
 
 	/*
@@ -34,12 +38,12 @@ class darkSkyController {
 	* Argument $cityname
 	* returns APIKEY when needed
 	*/
-	public function displayOpenWeatherAPIKey() {
+	private function displayOpenWeatherAPIKey() {
 		echo $this->darkSkyAPIKey;
 		return true;
 	}
 
-/*
+	/*
 	* Argument $weatherData
 	* returns profanity string
 	*/
